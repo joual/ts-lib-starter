@@ -11,9 +11,7 @@ jobs:
       - node/with-cache:
           steps:
             - run: yarn --frozen-lockfile
-            - run:
-              name: Install JUnit coverage reporter
-              command: yarn add --dev jest-junit
+            - run: yarn add --dev jest-junit
             - run: yarn test -- --ci --runInBand --collectCoverage --reporters=default --reporters=jest-junit
               environment:
                 JEST_JUNIT_OUTPUT_DIR: "reports/junit/js-test-results.xml"
