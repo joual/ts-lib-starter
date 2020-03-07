@@ -11,6 +11,7 @@ jobs:
       - node/with-cache:
           steps:
             - run: yarn --frozen-lockfile
+            - run: yarn run build
             - run: yarn add --dev jest-junit
             - run:
                 command: yarn test -- --ci --runInBand --collectCoverage --reporters=default --reporters=jest-junit
@@ -19,9 +20,22 @@ jobs:
             - store_test_results:
                 path: reports/junit
             - codecov/upload:
-                file: coverage/coverage-final.json
+                file: coverage/
+  # release:
+  #   branches:
+  #     only: master
+  #   steps:
+  #     - checkout
+  #     - node/with-cache:
+  #         steps:
+  #           - run: yarn install
+  #           - run: yarn build
+  #           - run: yarn run semantic-release
 
 workflows:
-    build-and-test:
+    pipeline:
       jobs:
         - build-and-test
+        # - release:
+        #     requires:
+        #       - build-and-test
