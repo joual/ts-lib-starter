@@ -12,9 +12,10 @@ jobs:
           steps:
             - run: yarn --frozen-lockfile
             - run: yarn add --dev jest-junit
-            - run: yarn test -- --ci --runInBand --collectCoverage --reporters=default --reporters=jest-junit
-              environment:
-                JEST_JUNIT_OUTPUT_DIR: "reports/junit/js-test-results.xml"
+            - run:
+                command: yarn test -- --ci --runInBand --collectCoverage --reporters=default --reporters=jest-junit
+                environment:
+                  JEST_JUNIT_OUTPUT_DIR: "reports/junit/js-test-results.xml"
             - store_test_results:
                 path: reports/junit
             - codecov/upload:
